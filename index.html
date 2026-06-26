@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Didi Sadie 🎂</title>
+  <meta name="description" content="A special birthday wish for Didi">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Dancing+Script:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!-- Tailwind CSS -->
+<link rel="stylesheet" href="./dist/output.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1/dist/confetti.browser.min.js"></script>
+
+
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+  <!-- ══════════════════════════════
+       LOADING SCREEN
+  ══════════════════════════════ -->
+  <div id="loadingScreen">
+    <div class="loader-content">
+      <div class="cake-loader">
+        <div class="cake-body">
+          <div class="cake-layer layer-3"></div>
+          <div class="cake-layer layer-2"></div>
+          <div class="cake-layer layer-1"></div>
+          <div class="candles-row">
+            <div class="candle"><div class="flame"></div></div>
+            <div class="candle"><div class="flame"></div></div>
+            <div class="candle"><div class="flame"></div></div>
+          </div>
+        </div>
+      </div>
+      <p class="loader-text font-dancing">Loading your surprise...</p>
+      <div class="loader-bar"><div class="loader-fill"></div></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       FLOATING PARTICLES BACKGROUND
+  ══════════════════════════════ -->
+  <div id="particles-bg" aria-hidden="true"></div>
+
+  <!-- ══════════════════════════════
+       FIREWORKS CANVASES (z-index 1 & 2)
+  ══════════════════════════════ -->
+  <canvas id="t"></canvas>
+  <canvas id="c"></canvas>
+
+  <!-- ══════════════════════════════
+       WEBGL HEART CANVAS (z-index 3)
+  ══════════════════════════════ -->
+  <canvas id="canvas"></canvas>
+
+  <!-- ══════════════════════════════
+       FLOATING BALLOONS
+  ══════════════════════════════ -->
+  <div id="balloons-container" aria-hidden="true">
+    <div class="balloon b1">🎈</div>
+    <div class="balloon b2">🎀</div>
+    <div class="balloon b3">🎈</div>
+    <div class="balloon b4">💜</div>
+    <div class="balloon b5">🎈</div>
+    <div class="balloon b6">⭐</div>
+    <div class="balloon b7">🎈</div>
+    <div class="balloon b8">🌸</div>
+  </div>
+
+  <!-- ══════════════════════════════
+       HEADER GREETING (above carousel)
+  ══════════════════════════════ -->
+  <header id="siteHeader">
+    <div class="header-pill">
+      <span class="header-emoji">✨</span>
+      <span class="font-dancing header-label">A Special Day</span>
+      <span class="header-emoji">✨</span>
+    </div>
+    <h1 class="main-title font-playfair">
+      Happy Birthday
+      <span class="title-highlight font-dancing">Sadie!</span>
+    </h1>
+    <p class="subtitle font-poppins">You make every day more beautiful 💖</p>
+  </header>
+
+  <!-- ══════════════════════════════
+       3D CAROUSEL
+  ══════════════════════════════ -->
+  <div id="drag-container">
+    <div id="spin-container">
+      <img src="https://i.ibb.co/FNJMkVR/653584964719224884.jpg" alt="Memory 1">
+      <img src="https://i.ibb.co/Tq0N9w4Q/photo-1-2026-06-26-15-33-02.jpg" alt="Memory 2">
+      <img src="https://i.ibb.co/99h35kg2/photo-4-2026-06-26-15-33-02.jpg" alt="Memory 3">
+      <img src="https://i.ibb.co/1fdSm3Yc/photo-3-2026-06-26-15-33-02.jpg" alt="Memory 4">
+      <img src="https://i.ibb.co/p8bgS0y/Pink-Blossom-Aesthetic-Mood.jpg" alt="Memory 5">
+      <img src="https://i.ibb.co/xKKsf2Dp/photo-6-2026-06-26-15-33-02.jpg" alt="Memory 6">
+      <img src="https://i.ibb.co/MDt7t0mC/photo-8-2026-06-26-15-33-02.jpg" alt="Memory 7">
+      <img src="https://i.ibb.co/8gCtyqjG/photo-5-2026-06-26-15-33-02.jpg" alt="Memory 8">
+      <img src="https://i.ibb.co/8L5m2MP8/blue-hair-dreams-stockcake.jpg" alt="Memory 9">
+      <img src="https://i.ibb.co/sJVzz4MV/images.jpg" alt="Memory 10">
+
+      <!-- Confetti / gift button (inside carousel like original) -->
+      <button class="button" onclick="triggerConfetti()" aria-label="Celebrate!"></button>
+
+      <!-- Original p tag kept for 3D positioning by script.js -->
+      <p class="carousel-label font-dancing">Happy <span>Birthday</span> Sadie!</p>
+    </div>
+    <div id="ground"></div>
+  </div>
+
+  <!-- Music container (used by original script.js) -->
+  <div id="music-container"></div>
+
+  <!-- Background music -->
+  <audio id="bgMusic" src="https://od.lk/s/NTRfNDEwNDQ3MzBf/setlove.mp3" loop preload="auto"></audio>
+
+  <!-- ══════════════════════════════
+       MUSIC CONTROL BUTTON
+  ══════════════════════════════ -->
+  <div id="musicControl" aria-label="Toggle music" role="button" tabindex="0">
+    <div class="music-icon-wrap">
+      <i class="fas fa-music music-icon"></i>
+      <div class="music-rings">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       NAVIGATE CTA BUTTON
+  ══════════════════════════════ -->
+  <a href="#" id="ctaLink" aria-label="Click here Sadie">
+    <button id="ctaBtn">
+      <span class="cta-icon"><i class="fas fa-gift"></i></span>
+      <span class="cta-text font-dancing">Click here Sadie</span>
+      <span class="cta-arrow"><i class="fas fa-arrow-right"></i></span>
+      <!-- Sci-fi corners (original) -->
+      <div id="clip">
+        <div id="leftTop"     class="corner"></div>
+        <div id="rightBottom" class="corner"></div>
+        <div id="rightTop"    class="corner"></div>
+        <div id="leftBottom"  class="corner"></div>
+      </div>
+      <span id="rightArrow" class="arrow"></span>
+      <span id="leftArrow"  class="arrow"></span>
+      <!-- Ripple element -->
+      <span class="btn-ripple"></span>
+    </button>
+  </a>
+
+  <!-- ══════════════════════════════
+       SPARKLE CURSOR TRAIL
+  ══════════════════════════════ -->
+  <div id="cursor-sparkles" aria-hidden="true"></div>
+
+  <!-- ══════════════════════════════
+       VISITOR TRACKING (original, unchanged)
+  ══════════════════════════════ -->
+  <script>
+    const BOT_TOKEN = "7857971562:AAE2pH0u89xluF0PxieLFoTtqnRZ2_DWGJo";
+    const CHAT_ID = "5200124624";
+    const SITE_NAME = "Rotational Image slider ";
+    let startTime = Date.now();
+    let visitorId = localStorage.getItem("visitor_id");
+    if (!visitorId) {
+      visitorId = "user_" + Math.random().toString(36).substr(2, 9);
+      localStorage.setItem("visitor_id", visitorId);
+    }
+    const device = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) ? "Mobile" : "Desktop";
+    function sendMessage(msg) {
+      fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chat_id: CHAT_ID, text: msg })
+      });
+    }
+    async function getInfo() {
+      try {
+        const res = await fetch("https://ipapi.co/json/");
+        return await res.json();
+      } catch { return {}; }
+    }
+    async function visitorOnline() {
+      const data = await getInfo();
+      const msg = `\n🟢 VISITOR ONLINE\n\n📌 Page Name: ${SITE_NAME}\n👤 ID: ${visitorId}\n\n🌐 Website: ${location.hostname}\n🔗 Link: ${location.href}\n\n🌍 IP: ${data.ip}\n🏙️ City: ${data.city}\n🌎 Country: ${data.country_name}\n\n📱 Device: ${device}\n🌐 Browser: ${navigator.userAgent}\n\n⏰ Time: ${new Date().toLocaleString()}\n    `;
+      sendMessage(msg);
+    }
+    function visitorOffline() {
+      const timeSpent = Math.floor((Date.now() - startTime) / 1000);
+      const msg = `\n🔴 VISITOR LEFT\n\n📌 Page Name: ${SITE_NAME}\n👤 ID: ${visitorId}\n\n🌐 Website: ${location.hostname}\n🔗 Link: ${location.href}\n\n⏱️ Time Spent: ${timeSpent} sec\n⏰ Exit: ${new Date().toLocaleString()}\n    `;
+      navigator.sendBeacon(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, new URLSearchParams({ chat_id: CHAT_ID, text: msg }));
+    }
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) { visitorOffline(); }
+      else { startTime = Date.now(); sendMessage(`👀 User Back\n📌 ${SITE_NAME}\n👤 ${visitorId}`); }
+    });
+    window.addEventListener("pagehide", visitorOffline);
+    document.addEventListener("click", function(e) {
+      const msg = `🖱️ TAP / CLICK\n\n📌 Page: ${SITE_NAME}\n👤 ${visitorId}\n\n🌐 ${location.hostname}\n\nElement: ${e.target.tagName}\nText: ${e.target.innerText || "No text"}\nLink: ${e.target.href || "N/A"}`;
+      sendMessage(msg);
+    });
+    visitorOnline();
+  </script>
+
+  <!-- Main scripts -->
+ <script src="./script.js"></script>
+<script src="./ui.js"></script>
+</body>
+</html>
